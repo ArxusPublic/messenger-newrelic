@@ -18,7 +18,7 @@ jobs:
               uses: shivammathur/setup-php@master
               with:
                   php-version: ${{ matrix.php-versions }}
-                  extension-csv: xdebug, mbstring #optional
+                  extensions: xdebug, mbstring #optional
             - name: Check PHP Version
               run: php -v
             - name: Validate composer.json and composer.lock

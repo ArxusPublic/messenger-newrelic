@@ -10,7 +10,7 @@
         "symfony/http-kernel": "^4.3"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.10",
+        "friendsofphp/php-cs-fixer": "^2.16",
         "jakub-onderka/php-parallel-lint": "^1.0",
         "nikic/php-parser": "^4.0",
         "php-vcr/php-vcr": "^1.4",
