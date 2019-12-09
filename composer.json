@@ -1,0 +1,40 @@
+{
+    "name": "arxus/messenger-newrelic",
+    "description": "Make symfony messenger report consumption to newrelic",
+    "license": "proprietary",
+    "type": "symfony-bundle",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "symfony/messenger": "^4.3",
+        "symfony/http-kernel": "^4.3"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.10",
+        "jakub-onderka/php-parallel-lint": "^1.0",
+        "nikic/php-parser": "^4.0",
+        "php-vcr/php-vcr": "^1.4",
+        "phpro/grumphp": "^0.17",
+        "phpunit/phpunit": "^8.5",
+        "roave/security-advisories": "dev-master",
+        "squizlabs/php_codesniffer": "^3.2",
+        "symfony/phpunit-bridge": "^4.0",
+        "symfony/process": "^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Arxus\\NewrelicMessengerBundle\\": ""
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Arxus\\NewrelicMessengerBundle\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    }
+}
