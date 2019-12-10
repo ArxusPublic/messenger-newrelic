@@ -10,7 +10,7 @@ jobs:
                 operating-system: [ubuntu-latest]
                 php-versions: ['7.2', '7.3', '7.4']
                 composer-options: ['', '--prefer-lowest']
-        name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
+        name: PHP ${{ matrix.php-versions }} @ ${{ matrix.operating-system }} ${{ matrix.composer-options }}
         steps:
             - name: Checkout
               uses: actions/checkout@v1
@@ -24,6 +24,6 @@ jobs:
             - name: Validate composer.json and composer.lock
               run: composer validate
             - name: Install dependencies
-              run: composer update --prefer-dist --no-progress --no-suggest ${{matrix.composer-options}}
+              run: composer update --prefer-dist --no-progress --no-suggest ${{ matrix.composer-options }}
             - name: Run test suite
               run: vendor/bin/grumphp run
