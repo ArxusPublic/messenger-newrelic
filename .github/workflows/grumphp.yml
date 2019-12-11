@@ -26,7 +26,7 @@ jobs:
               run: composer update --prefer-dist --no-progress --no-suggest ${{ matrix.composer-options }}
             - name: Run non windows test suite
               run: vendor/bin/grumphp run
-              if: matrix.operating-system != windows-latest
+              if: matrix.operating-system != 'windows-latest'
             - name: Run windows test suite
               run: vendor/bin/grumphp run --tasks phpunit
-              if: matrix.operating-system == windows-latest
+              if: matrix.operating-system == 'windows-latest'
