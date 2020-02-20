@@ -7,8 +7,8 @@
     "prefer-stable": true,
     "require": {
         "php": "^7.2",
-        "symfony/messenger": "^4.3",
-        "symfony/http-kernel": "^4.3"
+        "symfony/messenger": "^4.3 || ~5.0",
+        "symfony/http-kernel": "^4.3 || ~5.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16.1",
