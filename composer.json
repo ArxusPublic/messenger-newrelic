@@ -1,7 +1,7 @@
 {
     "name": "arxus/messenger-newrelic",
     "description": "Make symfony messenger report consumption to newrelic",
-    "license": "proprietary",
+    "license": "mit",
     "type": "symfony-bundle",
     "minimum-stability": "dev",
     "prefer-stable": true,
