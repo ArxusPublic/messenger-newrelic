@@ -3,6 +3,7 @@
 namespace Arxus\NewrelicMessengerBundle\Middleware;
 
 use Arxus\NewrelicMessengerBundle\Newrelic\NewrelicManager;
+use Arxus\NewrelicMessengerBundle\Newrelic\NewrelicTransactionNameManager;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
@@ -16,11 +17,14 @@ class NewRelicMiddleware implements MiddlewareInterface
     private $newrelicManager;
 
     /**
-     * NewRelicMiddleware constructor.
+     * @var NewrelicTransactionNameManager
      */
-    public function __construct(NewrelicManager $newrelicManager)
+    private $newrelicTransactionNameManager;
+
+    public function __construct(NewrelicManager $newrelicManager, NewrelicTransactionNameManager $newrelicTransactionNameManager)
     {
         $this->newrelicManager = $newrelicManager;
+        $this->newrelicTransactionNameManager = $newrelicTransactionNameManager;
     }
 
     public function handle(Envelope $envelope, StackInterface $stack): Envelope
@@ -28,8 +32,9 @@ class NewRelicMiddleware implements MiddlewareInterface
         if (!$this->newrelicManager->isEnabled()) {
             return $stack->next()->handle($envelope, $stack);
         }
+
         $this->newrelicManager->startTransaction();
-        $this->newrelicManager->nameTransaction(get_class($envelope->getMessage()));
+        $this->newrelicManager->nameTransaction($this->newrelicTransactionNameManager->getTransactionName($envelope));
         try {
             return $stack->next()->handle($envelope, $stack);
         } catch (HandlerFailedException $e) {

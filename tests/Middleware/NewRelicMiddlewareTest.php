@@ -4,6 +4,7 @@ namespace Arxus\NewrelicMessengerBundle\Tests\Middleware;
 
 use Arxus\NewrelicMessengerBundle\Middleware\NewRelicMiddleware;
 use Arxus\NewrelicMessengerBundle\Newrelic\NewrelicManager;
+use Arxus\NewrelicMessengerBundle\Newrelic\NewrelicTransactionNameManager;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Messenger\Envelope;
@@ -13,12 +14,12 @@ use Symfony\Component\Messenger\Middleware\StackInterface;
 class NewRelicMiddlewareTest extends TestCase
 {
     /**
-     * @var MockObject|StackInterface
+     * @var StackInterface|MockObject
      */
     private $stackMock;
 
     /**
-     * @var MockObject|MiddlewareInterface
+     * @var MiddlewareInterface|MockObject
      */
     private $middlewareMock;
 
@@ -28,6 +29,11 @@ class NewRelicMiddlewareTest extends TestCase
     private $newrelicManagerMock;
 
     /**
+     * @var NewrelicTransactionNameManager|MockObject
+     */
+    private $newrelicTransactionNameManagerMock;
+
+    /**
      * @var Envelope
      */
     private $envelope;
@@ -35,7 +41,7 @@ class NewRelicMiddlewareTest extends TestCase
     /**
      * @var NewRelicMiddleware
      */
-    private $newrelicmiddleware;
+    private $newrelicMiddleware;
 
     public function setUp(): void
     {
@@ -43,12 +49,18 @@ class NewRelicMiddlewareTest extends TestCase
         $this->middlewareMock = $this->createMock(MiddlewareInterface::class);
         $this->stackMock->method('next')->willReturn($this->middlewareMock);
         $this->newrelicManagerMock = $this->createMock(NewrelicManager::class);
+        $this->newrelicTransactionNameManagerMock = $this->createMock(NewrelicTransactionNameManager::class);
         $this->envelope = new Envelope(new \stdClass());
-        $this->newrelicmiddleware = new NewRelicMiddleware($this->newrelicManagerMock);
+        $this->newrelicMiddleware = new NewRelicMiddleware($this->newrelicManagerMock, $this->newrelicTransactionNameManagerMock);
     }
 
     public function testHandle(): void
     {
+        $this->newrelicTransactionNameManagerMock
+            ->expects($this->once())
+            ->method('getTransactionName')
+            ->with($this->envelope)
+            ->willReturn(\stdClass::class);
         $this->newrelicManagerMock
             ->expects($this->once())
             ->method('isEnabled')
@@ -63,7 +75,7 @@ class NewRelicMiddlewareTest extends TestCase
         $this->newrelicManagerMock
             ->expects($this->once())
             ->method('endTransaction');
-        $this->newrelicmiddleware->handle($this->envelope, $this->stackMock);
+        $this->newrelicMiddleware->handle($this->envelope, $this->stackMock);
     }
 
     public function testHandleDisabled(): void
@@ -81,6 +93,6 @@ class NewRelicMiddlewareTest extends TestCase
         $this->newrelicManagerMock
             ->expects($this->never())
             ->method('endTransaction');
-        $this->newrelicmiddleware->handle($this->envelope, $this->stackMock);
+        $this->newrelicMiddleware->handle($this->envelope, $this->stackMock);
     }
 }

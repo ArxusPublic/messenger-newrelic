@@ -29,6 +29,9 @@ services:
     Arxus\NewrelicMessengerBundle\Newrelic\NewrelicManager:
         class: Arxus\NewrelicMessengerBundle\Newrelic\NewrelicManager
 
+    Arxus\NewrelicMessengerBundle\Newrelic\NewrelicTransactionNameManager:
+        class: Arxus\NewrelicMessengerBundle\Newrelic\NewrelicTransactionNameManager
+
     Arxus\NewrelicMessengerBundle\Middleware\NewRelicMiddleware:
         class: Arxus\NewrelicMessengerBundle\Middleware\NewRelicMiddleware
 
