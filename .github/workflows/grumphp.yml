@@ -1,6 +1,6 @@
 name: GrumPHP
 
-on: [push]
+on: [push, pull_request]
 jobs:
     run:
         runs-on: ${{ matrix.operating-system }}
