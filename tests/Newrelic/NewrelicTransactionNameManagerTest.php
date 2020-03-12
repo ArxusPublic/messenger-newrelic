@@ -2,7 +2,7 @@
 
 namespace Arxus\NewrelicMessengerBundle\Tests\Middleware;
 
-use Arxus\NewrelicMessengerBundle\Newrelic\NameableInterface;
+use Arxus\NewrelicMessengerBundle\Newrelic\NamableNewrelicTransactionInterface;
 use Arxus\NewrelicMessengerBundle\Newrelic\NewrelicTransactionNameManager;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Messenger\Envelope;
@@ -30,7 +30,7 @@ class NewrelicTransactionNameManagerTest extends TestCase
     public function testTransactionNameWithMessageNameable(): void
     {
         $randomTransactionName = uniqid('transactionName_');
-        $messageMock = $this->createMock(NameableInterface::class);
+        $messageMock = $this->createMock(NamableNewrelicTransactionInterface::class);
         $messageMock
             ->expects($this->once())
             ->method('getNewrelicName')
