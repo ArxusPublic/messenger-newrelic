@@ -2,7 +2,7 @@
 
 namespace Arxus\NewrelicMessengerBundle\Newrelic;
 
-interface NamableNewrelicTransactionInterface
+interface NameableNewrelicTransactionInterface
 {
     public function getNewrelicTransactionName();
 }

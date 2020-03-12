@@ -9,7 +9,7 @@ class NewrelicTransactionNameManager
     public function getTransactionName(Envelope $envelope): string
     {
         $message = $envelope->getMessage();
-        if ($message instanceof NamableNewrelicTransactionInterface) {
+        if ($message instanceof NameableNewrelicTransactionInterface) {
             return $message->getNewrelicTransactionName();
         }
 
