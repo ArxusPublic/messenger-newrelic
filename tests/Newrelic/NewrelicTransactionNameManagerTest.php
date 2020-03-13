@@ -33,7 +33,7 @@ class NewrelicTransactionNameManagerTest extends TestCase
         $messageMock = $this->createMock(NameableNewrelicTransactionInterface::class);
         $messageMock
             ->expects($this->once())
-            ->method('getNewrelicName')
+            ->method('getNewrelicTransactionName')
             ->willReturn($randomTransactionName);
         $envelope = new Envelope($messageMock);
         $transactionName = $this->newrelicTransactionNameManager->getTransactionName($envelope);
