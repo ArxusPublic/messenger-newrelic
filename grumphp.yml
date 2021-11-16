@@ -1,6 +1,8 @@
-parameters:
-    git_dir: .
-    bin_dir: vendor/bin
+grumphp:
+    environment:
+      variables:
+        GRUMPHP_BIN_DIR: vendor/bin
+        GRUMPHP_GIT_WORKING_DIR: .
     tasks:
         phpcsfixer2:
             allow_risky: true
