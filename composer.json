@@ -11,11 +11,11 @@
         "symfony/messenger": "^4.3 || ~5.0 || ~6.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.16.1",
+        "friendsofphp/php-cs-fixer": "~3.0",
         "jakub-onderka/php-parallel-lint": "^1.0",
         "nikic/php-parser": "^4.0",
         "phpro/grumphp": "^1.5",
-        "phpunit/phpunit": "^8.5",
+        "phpunit/phpunit": "^9.0",
         "roave/security-advisories": "dev-master",
         "symfony/process": "^4.0 || ~5.0 || ~6.0"
     },

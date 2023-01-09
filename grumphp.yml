@@ -7,7 +7,6 @@ grumphp:
         phpcsfixer2:
             allow_risky: true
             cache_file: ~
-            config: .php_cs.dist
             rules: []
             using_cache: ~
             config_contains_finder: true
