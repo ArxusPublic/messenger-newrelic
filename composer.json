@@ -12,7 +12,6 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "~3.5",
-        "jakub-onderka/php-parallel-lint": "^1.0",
         "nikic/php-parser": "^4.0",
         "phpro/grumphp": "^1.5",
         "phpunit/phpunit": "^9.0",

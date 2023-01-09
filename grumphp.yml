@@ -13,7 +13,6 @@ grumphp:
             verbose: true
             diff: false
             triggered_by: ['php']
-        phplint: ~
         yamllint: ~
         composer:
             strict: false
