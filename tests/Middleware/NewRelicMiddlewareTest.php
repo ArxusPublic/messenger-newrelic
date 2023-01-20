@@ -51,6 +51,7 @@ class NewRelicMiddlewareTest extends TestCase
         $this->newrelicManagerMock = $this->createMock(NewrelicManager::class);
         $this->newrelicTransactionNameManagerMock = $this->createMock(NewrelicTransactionNameManager::class);
         $this->envelope = new Envelope(new \stdClass());
+        $this->middlewareMock->method('handle')->willReturn($this->envelope);
         $this->newrelicMiddleware = new NewRelicMiddleware($this->newrelicManagerMock, $this->newrelicTransactionNameManagerMock);
     }
 
