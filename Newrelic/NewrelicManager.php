@@ -1,11 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Arxus\NewrelicMessengerBundle\Newrelic;
 
 class NewrelicManager
 {
     /**
-     * Is the newrelic extension loaded
+     * Is the newrelic extension loaded.
      */
     public function isEnabled(): bool
     {
@@ -13,7 +13,7 @@ class NewrelicManager
     }
 
     /**
-     * Immidiately end the newrelic transaction
+     * Immidiately end the newrelic transaction.
      */
     public function endTransaction(): void
     {
@@ -21,7 +21,7 @@ class NewrelicManager
     }
 
     /**
-     * Start a new newrelic transaction
+     * Start a new newrelic transaction.
      */
     public function startTransaction(): void
     {
@@ -29,7 +29,7 @@ class NewrelicManager
     }
 
     /**
-     * Give the current transaction a custom name
+     * Give the current transaction a custom name.
      */
     public function nameTransaction(string $name): void
     {
@@ -37,7 +37,9 @@ class NewrelicManager
     }
 
     /**
-     * Report an exception to newrelic
+     * Report an exception to newrelic.
+     *
+     * @param mixed $exception
      */
     public function noticeError($exception): void
     {

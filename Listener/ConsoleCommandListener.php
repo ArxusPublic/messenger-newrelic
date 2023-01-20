@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Arxus\NewrelicMessengerBundle\Listener;
 
@@ -30,7 +30,7 @@ class ConsoleCommandListener
         if (!$this->newrelicManager->isEnabled()) {
             return;
         }
-        if ($command->getName() !== 'messenger:consume') {
+        if ('messenger:consume' !== $command->getName()) {
             return;
         }
         $this->newrelicManager->endTransaction();

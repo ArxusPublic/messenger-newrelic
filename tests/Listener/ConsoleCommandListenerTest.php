@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Arxus\NewrelicMessengerBundle\Tests\Listener;
 
@@ -26,7 +26,7 @@ class ConsoleCommandListenerTest extends TestCase
      */
     private $newrelicManagerMock;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         // Create mocks
         $this->commandMock = $this->createMock(Command::class);
@@ -34,7 +34,7 @@ class ConsoleCommandListenerTest extends TestCase
         $this->newrelicManagerMock = $this->createMock(NewrelicManager::class);
     }
 
-    public function testInvokeEnabled(): void
+    public function test_invoke_enabled(): void
     {
         $this->commandMock
             ->expects($this->once())
@@ -55,7 +55,7 @@ class ConsoleCommandListenerTest extends TestCase
         $commandListener($this->eventMock);
     }
 
-    public function testInvokeDisabled(): void
+    public function test_invoke_disabled(): void
     {
         $this->commandMock
             ->expects($this->never())
@@ -76,7 +76,7 @@ class ConsoleCommandListenerTest extends TestCase
         $commandListener($this->eventMock);
     }
 
-    public function testInvokeOtherCommand(): void
+    public function test_invoke_other_command(): void
     {
         $this->commandMock
             ->expects($this->once())
@@ -97,7 +97,7 @@ class ConsoleCommandListenerTest extends TestCase
         $commandListener($this->eventMock);
     }
 
-    public function testInvokeNoCommand(): void
+    public function test_invoke_no_command(): void
     {
         $this->commandMock
             ->expects($this->never())
