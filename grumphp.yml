@@ -7,14 +7,12 @@ grumphp:
         phpcsfixer2:
             allow_risky: true
             cache_file: ~
-            config: .php_cs.dist
             rules: []
             using_cache: ~
             config_contains_finder: true
             verbose: true
             diff: false
             triggered_by: ['php']
-        phplint: ~
         yamllint: ~
         composer:
             strict: false

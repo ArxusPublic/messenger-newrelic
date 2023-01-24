@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Arxus\NewrelicMessengerBundle\Tests\Listener;
 
@@ -8,6 +8,8 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Event\ConsoleCommandEvent;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleCommandListenerTest extends TestCase
 {
@@ -17,24 +19,25 @@ class ConsoleCommandListenerTest extends TestCase
     private $commandMock;
 
     /**
-     * @var MockObject|ConsoleCommandEvent
-     */
-    private $eventMock;
-
-    /**
      * @var NewrelicManager|MockObject
      */
     private $newrelicManagerMock;
 
-    public function setUp(): void
+    /**
+     * @var ConsoleCommandEvent
+     */
+    private $event;
+
+    protected function setUp(): void
     {
         // Create mocks
         $this->commandMock = $this->createMock(Command::class);
-        $this->eventMock = $this->createMock(ConsoleCommandEvent::class);
         $this->newrelicManagerMock = $this->createMock(NewrelicManager::class);
+
+        $this->event = new ConsoleCommandEvent($this->commandMock, $this->createMock(InputInterface::class), $this->createMock(OutputInterface::class));
     }
 
-    public function testInvokeEnabled(): void
+    public function test_invoke_enabled(): void
     {
         $this->commandMock
             ->expects($this->once())
@@ -47,15 +50,12 @@ class ConsoleCommandListenerTest extends TestCase
             ->expects($this->once())
             ->method('isEnabled')
             ->willReturn(true);
-        $this->eventMock
-            ->expects($this->once())
-            ->method('getCommand')
-            ->willReturn($this->commandMock);
+
         $commandListener = new ConsoleCommandListener($this->newrelicManagerMock);
-        $commandListener($this->eventMock);
+        $commandListener($this->event);
     }
 
-    public function testInvokeDisabled(): void
+    public function test_invoke_disabled(): void
     {
         $this->commandMock
             ->expects($this->never())
@@ -68,15 +68,11 @@ class ConsoleCommandListenerTest extends TestCase
             ->expects($this->once())
             ->method('isEnabled')
             ->willReturn(false);
-        $this->eventMock
-            ->expects($this->once())
-            ->method('getCommand')
-            ->willReturn($this->commandMock);
         $commandListener = new ConsoleCommandListener($this->newrelicManagerMock);
-        $commandListener($this->eventMock);
+        $commandListener($this->event);
     }
 
-    public function testInvokeOtherCommand(): void
+    public function test_invoke_other_command(): void
     {
         $this->commandMock
             ->expects($this->once())
@@ -89,15 +85,11 @@ class ConsoleCommandListenerTest extends TestCase
             ->expects($this->once())
             ->method('isEnabled')
             ->willReturn(true);
-        $this->eventMock
-            ->expects($this->once())
-            ->method('getCommand')
-            ->willReturn($this->commandMock);
         $commandListener = new ConsoleCommandListener($this->newrelicManagerMock);
-        $commandListener($this->eventMock);
+        $commandListener($this->event);
     }
 
-    public function testInvokeNoCommand(): void
+    public function test_invoke_no_command(): void
     {
         $this->commandMock
             ->expects($this->never())
@@ -110,11 +102,10 @@ class ConsoleCommandListenerTest extends TestCase
             ->expects($this->never())
             ->method('isEnabled')
             ->willReturn(true);
-        $this->eventMock
-            ->expects($this->once())
-            ->method('getCommand')
-            ->willReturn('');
+
+        $eventWithoutCommand = new ConsoleCommandEvent(null, $this->event->getInput(), $this->event->getOutput());
+
         $commandListener = new ConsoleCommandListener($this->newrelicManagerMock);
-        $commandListener($this->eventMock);
+        $commandListener($eventWithoutCommand);
     }
 }

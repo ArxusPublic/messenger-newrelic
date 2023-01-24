@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Arxus\NewrelicMessengerBundle\Tests\Middleware;
 
@@ -43,7 +43,7 @@ class NewRelicMiddlewareTest extends TestCase
      */
     private $newrelicMiddleware;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->stackMock = $this->createMock(StackInterface::class);
         $this->middlewareMock = $this->createMock(MiddlewareInterface::class);
@@ -51,10 +51,11 @@ class NewRelicMiddlewareTest extends TestCase
         $this->newrelicManagerMock = $this->createMock(NewrelicManager::class);
         $this->newrelicTransactionNameManagerMock = $this->createMock(NewrelicTransactionNameManager::class);
         $this->envelope = new Envelope(new \stdClass());
+        $this->middlewareMock->method('handle')->willReturn($this->envelope);
         $this->newrelicMiddleware = new NewRelicMiddleware($this->newrelicManagerMock, $this->newrelicTransactionNameManagerMock);
     }
 
-    public function testHandle(): void
+    public function test_handle(): void
     {
         $this->newrelicTransactionNameManagerMock
             ->expects($this->once())
@@ -78,7 +79,7 @@ class NewRelicMiddlewareTest extends TestCase
         $this->newrelicMiddleware->handle($this->envelope, $this->stackMock);
     }
 
-    public function testHandleDisabled(): void
+    public function test_handle_disabled(): void
     {
         $this->newrelicManagerMock
             ->expects($this->once())

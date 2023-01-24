@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Arxus\NewrelicMessengerBundle\Tests\Middleware;
 
@@ -14,12 +14,12 @@ class NewrelicTransactionNameManagerTest extends TestCase
      */
     private $newrelicTransactionNameManager;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->newrelicTransactionNameManager = new NewrelicTransactionNameManager();
     }
 
-    public function testTransactionNameWithoutMessageNameable(): void
+    public function test_transaction_name_without_message_nameable(): void
     {
         $envelope = new Envelope(new \stdClass());
         $transactionName = $this->newrelicTransactionNameManager->getTransactionName($envelope);
@@ -27,7 +27,7 @@ class NewrelicTransactionNameManagerTest extends TestCase
         $this->assertEquals(\stdClass::class, $transactionName);
     }
 
-    public function testTransactionNameWithMessageNameable(): void
+    public function test_transaction_name_with_message_nameable(): void
     {
         $randomTransactionName = uniqid('transactionName_');
         $messageMock = $this->createMock(NameableNewrelicTransactionInterface::class);

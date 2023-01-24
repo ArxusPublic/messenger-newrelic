@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Arxus\NewrelicMessengerBundle\DependencyInjection;
 
@@ -14,7 +14,7 @@ class NewrelicMessengerExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $locator = new FileLocator(__DIR__ . '/../Resources/config/');
+        $locator = new FileLocator(__DIR__.'/../Resources/config/');
         $loader = new YamlFileLoader($container, $locator);
         $loader->load('services.yaml');
     }
