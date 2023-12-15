@@ -22,6 +22,48 @@ framework:
                 middleware:
                     - Arxus\NewrelicMessengerBundle\Middleware\NewRelicMiddleware
 ```
+## Usage
+
+Originally, all message classes had to implement `NameableNewrelicTransactionInterface`:
+```php
+class SampleMessage implements \Arxus\NewrelicMessengerBundle\Newrelic\NameableNewrelicTransactionInterface
+{
+    public function getNewrelicTransactionName() {
+        return 'MyCustom/Transaction-Name';
+    }
+}
+```
+
+Since version 0.6, it's also possible to register mappings by calling
+`NewrelicTransactionNameManager::addTransactionMapping` passing the target message class FQN
+and transaction name as arguments:
+```php
+class SampleMessage
+{
+    // ...
+}
+
+class SampleService
+{
+    public function __construct(
+        private \Arxus\NewrelicMessengerBundle\Newrelic\NewrelicTransactionNameManager $newrelicTrxNameManager
+    ) {
+        $this->newrelicTrxNameManager->addTransactionMapping(SampleMessage::class, 'MyCustom/Transaction-Name');
+    }
+}
+```
+
+This can also be used via Symfony's Dependency Injection:
+```yaml
+services:
+    # ...
+    Arxus\NewrelicMessengerBundle\Newrelic\NewrelicTransactionNameManager:
+      class: Arxus\NewrelicMessengerBundle\Newrelic\NewrelicTransactionNameManager
+      calls:
+        - addTransactionMapping: ['\App\Messenger\Message\SampleMessage', 'MyCustom/Transaction-Name']
+    # ...
+```
+
 ## Expected results
 When newrelic is correctly installed and configured on your host,
 it should report each consumed message as a separate transaction,
