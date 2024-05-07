@@ -53,7 +53,7 @@ class SampleService
 }
 ```
 
-This can also be used via Symfony's Dependency Injection:
+This can also be used via Symfony's Dependency Injection, with no need to create any new services or change existing service's code:
 ```yaml
 services:
     # ...
